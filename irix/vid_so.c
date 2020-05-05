@@ -46,6 +46,8 @@ cvar_t		*vid_ref;			// Name of Refresh DLL loaded
 cvar_t		*vid_xpos;			// X coordinate of window position
 cvar_t		*vid_ypos;			// Y coordinate of window position
 cvar_t		*vid_fullscreen;
+cvar_t		*r_customwidth;
+cvar_t		*r_customheight;
 
 // Global variables used internally by this module
 viddef_t	viddef;				// global video state; used by other modules
@@ -83,15 +85,16 @@ DLL GLUE
 ==========================================================================
 */
 
-#define	MAXPRINTMSG	4096
+#define	MAXPRINTMSG	8192 // was 4096
 void VID_Printf (int print_level, char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 	static qboolean	inupdate;
-	
-	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+
+	va_start (argptr, fmt);
+//	vsprintf (msg, fmt, argptr);
+	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
 	va_end (argptr);
 
 	if (print_level == PRINT_ALL)
@@ -105,9 +108,10 @@ void VID_Error (int err_level, char *fmt, ...)
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 	static qboolean	inupdate;
-	
-	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+
+	va_start (argptr, fmt);
+//	vsprintf (msg, fmt, argptr);
+	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
 	va_end (argptr);
 
 	Com_Error (err_level,"%s", msg);
@@ -141,6 +145,10 @@ typedef struct vidmode_s
 
 vidmode_t vid_modes[] =
 {
+#include "../qcommon/vid_modes.h"
+};
+/*vidmode_t vid_modes[] =
+{
 	{ "Mode 0: 320x240",   320, 240,   0 },
 	{ "Mode 1: 400x300",   400, 300,   1 },
 	{ "Mode 2: 512x384",   512, 384,   2 },
@@ -152,10 +160,17 @@ vidmode_t vid_modes[] =
 	{ "Mode 8: 1280x1024",  1280, 1024, 8 },
 	{ "Mode 9: 1600x1200", 1600, 1200, 9 },
 	{ "Mode 10: 2048x1536", 2048, 1536, 10 }
-};
+};*/
 
 qboolean VID_GetModeInfo( int *width, int *height, int mode )
 {
+	if (mode == -1) // Knightmare- custom mode
+	{
+		*width  = r_customwidth->value;
+		*height = r_customheight->value;
+		return true;
+	}
+
 	if ( mode < 0 || mode >= VID_NUM_MODES )
 		return false;
 
@@ -424,6 +439,8 @@ void VID_Init (void)
 	vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE);
 	vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE);
 	vid_fullscreen = Cvar_Get ("vid_fullscreen", "0", CVAR_ARCHIVE);
+	r_customwidth = Cvar_Get( "r_customwidth", "1600", CVAR_ARCHIVE );
+	r_customheight = Cvar_Get( "r_customheight", "1024", CVAR_ARCHIVE );
 	vid_gamma = Cvar_Get( "vid_gamma", "1", CVAR_ARCHIVE );
 
 	/* Add some console commands that we want to handle */

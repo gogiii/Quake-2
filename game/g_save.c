@@ -105,6 +105,8 @@ field_t fields[] = {
 //need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves
 	{"item", FOFS(item), F_ITEM},
 
+	{"musictrack", FOFS(musictrack), F_LSTRING},	// Knightmare- for specifying OGG or CD track
+
 	{"gravity", STOFS(gravity), F_LSTRING, FFL_SPAWNTEMP},
 	{"sky", STOFS(sky), F_LSTRING, FFL_SPAWNTEMP},
 	{"skyrotate", STOFS(skyrotate), F_FLOAT, FFL_SPAWNTEMP},
@@ -710,6 +712,8 @@ void ReadLevel (char *filename)
 
 	// check function pointer base address
 	fread (&base, sizeof(base), 1, f);
+
+/*	The __DATE__ check is sufficent for a version check.  This can fail sometimes.
 #ifdef _WIN32
 	if (base != (void *)InitGame)
 	{
@@ -719,6 +723,7 @@ void ReadLevel (char *filename)
 #else
 	gi.dprintf("Function offsets %d\n", ((byte *)base) - ((byte *)InitGame));
 #endif
+*/
 
 	// load the level locals
 	ReadLevelLocals (f);

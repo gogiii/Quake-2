@@ -1110,5 +1110,7 @@ struct edict_s
 	// common data blocks
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
+
+	char		*musictrack;	// Knightmare- for specifying OGG or CD track
 };
 

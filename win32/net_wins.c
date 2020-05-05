@@ -327,6 +327,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 }
 
 //=============================================================================
+void SV_DropClientFromAdr (netadr_t address); // Knightmare added
 
 qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
@@ -367,13 +368,22 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 						NET_AdrToString(*net_from));
 				continue;
 			}
-
-			if (dedicated->value)	// let dedicated servers continue after errors
+			// Knightmare- added Jitspoe's fix for WSAECONNRESET bomb-out
+			if (err == WSAECONNRESET)
+			{
+				Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
+					NET_AdrToString(*net_from));
+				// drop this client to not flood the console with above message
+				SV_DropClientFromAdr (*net_from);
+				continue;
+			}
+			// let ALL servers continue after errors
+		//	if (dedicated->value)	// let dedicated servers continue after errors
 				Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
 						NET_AdrToString(*net_from));
-			else
+		/*	else
 				Com_Error (ERR_DROP, "NET_GetPacket: %s from %s", 
-						NET_ErrorString(), NET_AdrToString(*net_from));
+						NET_ErrorString(), NET_AdrToString(*net_from));*/
 			continue;
 		}
 
@@ -443,7 +453,10 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 			return;
 
 		// some PPP links dont allow broadcasts
-		if ((err == WSAEADDRNOTAVAIL) && ((to.type == NA_BROADCAST) || (to.type == NA_BROADCAST_IPX)))
+		// Knightmare- added unplugged network fix
+		// Pat- WSAEHOSTUNREACH, this can occur if there is no network, or unplug ?
+		if ( ((err == WSAEADDRNOTAVAIL) || (err == WSAEHOSTUNREACH))
+			&& ((to.type == NA_BROADCAST) || (to.type == NA_BROADCAST_IPX)) )
 			return;
 
 		if (dedicated->value)	// let dedicated servers continue after errors

@@ -437,3 +437,15 @@ void CDAudio_Shutdown(void)
 	close(cdfile);
 	cdfile = -1;
 }
+
+// Knightmare added
+/*
+===========
+CDAudio_Active
+
+===========
+*/
+qboolean CDAudio_Active (void)
+{
+	return playing;
+}

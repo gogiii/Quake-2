@@ -269,7 +269,7 @@ void R_DrawSpanletTurbulentBlended33( void )
 		btemp = *( s_spanletvars.pbase + ( sturb ) + ( tturb << 6 ) );
 
 		if ( *s_spanletvars.pz <= ( s_spanletvars.izi >> 16 ) )
-			*s_spanletvars.pdest = vid.alphamap[btemp+*s_spanletvars.pdest*256];
+			*s_spanletvars.pdest = vid.alphamap[btemp+*s_spanletvars.pdest*256];	// crashes here on xswamp at 1280x720
 
 		s_spanletvars.izi += s_spanletvars.izistep;
 		s_spanletvars.pdest++;
@@ -612,6 +612,11 @@ void R_PolygonDrawSpans(espan_t *pspan, int iswater )
 
 	do
 	{
+		// Knightmare- catch bad indexes!
+		if ( (pspan->u < 0) || (pspan->v < 0)
+			|| (pspan->v >= (sizeof(d_scantable) / sizeof(int))) )
+			goto NextSpan;
+
 		s_spanletvars.pdest   = (byte *)d_viewbuffer + ( d_scantable[pspan->v] /*r_screenwidth * pspan->v*/) + pspan->u;
 		s_spanletvars.pz      = d_pzbuffer + (d_zwidth * pspan->v) + pspan->u;
 		s_spanletvars.u       = pspan->u;
@@ -1138,6 +1143,8 @@ static void R_DrawPoly( int iswater )
 	float		ymin, ymax;
 	emitpoint_t	*pverts;
 	espan_t	spans[MAXHEIGHT+1];
+
+	memset (&spans, 0, sizeof(spans));	// Knightmare- zero the spans array
 
 	s_polygon_spans = spans;
 

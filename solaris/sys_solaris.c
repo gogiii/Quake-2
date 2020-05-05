@@ -65,8 +65,9 @@ void Sys_Printf (char *fmt, ...)
 	char		text[1024];
 	unsigned char		*p;
 
-	va_start (argptr,fmt);
-	vsprintf (text,fmt,argptr);
+	va_start (argptr, fmt);
+//	vsprintf (text, fmt, argptr);
+	Q_vsnprintf (text, sizeof(text), fmt, argptr);
 	va_end (argptr);
 
 	if (strlen(text) > sizeof(text))
@@ -101,31 +102,32 @@ void Sys_Init(void)
 
 void Sys_Error (char *error, ...)
 { 
-    va_list     argptr;
-    char        string[1024];
+	va_list     argptr;
+	char        string[1024];
 
 // change stdin to non blocking
-    fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-    
-    va_start (argptr,error);
-    vsprintf (string,error,argptr);
-    va_end (argptr);
+	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+
+	va_start (argptr, error);
+//	vsprintf (string, error, argptr);
+	Q_vsnprintf (string, sizeof(string), error, argptr);
+	va_end (argptr);
 	fprintf(stderr, "Error: %s\n", string);
 
 	CL_Shutdown ();
 	Qcommon_Shutdown ();
 	_exit (1);
-
 } 
 
 void Sys_Warn (char *warning, ...)
 { 
-    va_list     argptr;
-    char        string[1024];
-    
-    va_start (argptr,warning);
-    vsprintf (string,warning,argptr);
-    va_end (argptr);
+	va_list     argptr;
+	char        string[1024];
+
+	va_start (argptr, warning);
+//	vsprintf (string, warning, argptr);
+	Q_vsnprintf (string, sizeof(string), warning, argptr);
+	va_end (argptr);
 	fprintf(stderr, "Warning: %s", string);
 } 
 

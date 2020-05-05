@@ -39,7 +39,7 @@ cvar_t *sndspeed;
 cvar_t *sndchannels;
 cvar_t *snddevice;
 
-static int tryrates[] = { 11025, 22051, 44100, 8000 };
+static int tryrates[] = { 11025, 22051, 44100, 48000 };
 
 qboolean SNDDMA_Init(void)
 {

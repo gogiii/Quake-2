@@ -182,7 +182,7 @@ void CL_AddProjectiles (void)
 		}
 
 		if (pr->effects & EF_BLASTER)
-			CL_BlasterTrail (pr->oldorigin, ent.origin);
+			CL_BlasterTrail (pr->oldorigin, ent.origin, 0xe0);
 		V_AddLight (pr->origin, 200, 1, 1, 0);
 
 		VectorCopy (pr->angles, ent.angles);
@@ -1196,12 +1196,23 @@ void CL_AddPacketEntities (frame_t *frame)
 //PGM
 				if (effects & EF_TRACKER)	// lame... problematic?
 				{
-					CL_BlasterTrail2 (cent->lerp_origin, ent.origin);
+				//	CL_BlasterTrail2 (cent->lerp_origin, ent.origin);
+					CL_BlasterTrail (cent->lerp_origin, ent.origin, 0xd0);
 					V_AddLight (ent.origin, 200, 0, 1, 0);		
+				}
+				else if (effects & EF_BLUEHYPERBLASTER) // Knightmare- EF_BLUEBLASTER
+				{
+					CL_BlasterTrail (cent->lerp_origin, ent.origin, 0x74);
+					V_AddLight (ent.origin, 200, 0.15, 0.15, 1);		
+				}
+				else if (effects & EF_IONRIPPER) // Knightmare- EF_REDBLASTER
+				{
+					CL_BlasterTrail (cent->lerp_origin, ent.origin, 0xe4);
+					V_AddLight (ent.origin, 200, 1, 0.15, 0.15);		
 				}
 				else
 				{
-					CL_BlasterTrail (cent->lerp_origin, ent.origin);
+					CL_BlasterTrail (cent->lerp_origin, ent.origin, 0xe0);
 					V_AddLight (ent.origin, 200, 1, 1, 0);
 				}
 //PGM
@@ -1210,6 +1221,8 @@ void CL_AddPacketEntities (frame_t *frame)
 			{
 				if (effects & EF_TRACKER)						// PGM	overloaded for blaster2.
 					V_AddLight (ent.origin, 200, 0, 1, 0);		// PGM
+				else if (effects & EF_IONRIPPER)				// Knightmare- overloaded for EF_REDHYPERBLASTER
+					V_AddLight (ent.origin, 200, 1, 0.15, 0.15);		
 				else											// PGM
 					V_AddLight (ent.origin, 200, 1, 1, 0);
 			}
@@ -1249,9 +1262,17 @@ void CL_AddPacketEntities (frame_t *frame)
 				V_AddLight (ent.origin, i, 1, 0.8, 0.1);
 			}
 			else if (effects & EF_FLAG1)
-			{
-				CL_FlagTrail (cent->lerp_origin, ent.origin, 242);
-				V_AddLight (ent.origin, 225, 1, 0.1, 0.1);
+			{	// Knightmare - EF_FLAG1|EF_FLAG2 is a special case for EF_FLAG3...  More cheese!
+				if (effects & EF_FLAG2)
+				{
+					CL_FlagTrail (cent->lerp_origin, ent.origin, 208);
+					V_AddLight (ent.origin, 255, 0.1, 1, 0.1);
+				}
+				else
+				{
+					CL_FlagTrail (cent->lerp_origin, ent.origin, 242);
+					V_AddLight (ent.origin, 225, 1, 0.1, 0.1);
+				}
 			}
 			else if (effects & EF_FLAG2)
 			{
@@ -1316,7 +1337,7 @@ void CL_AddPacketEntities (frame_t *frame)
 			{
 				if (effects & EF_ANIM_ALLFAST)
 				{
-					CL_BlasterTrail (cent->lerp_origin, ent.origin);
+					CL_BlasterTrail (cent->lerp_origin, ent.origin, 0xe0);
 				}
 				V_AddLight (ent.origin, 130, 1, 0.5, 0.5);
 			}
@@ -1343,7 +1364,7 @@ void CL_AddViewWeapon (player_state_t *ps, player_state_t *ops)
 		return;
 
 	// don't draw gun if in wide angle view
-	if (ps->fov > 90)
+	if (ps->fov > 160) // Knightmare - was 90
 		return;
 
 	memset (&gun, 0, sizeof(gun));
