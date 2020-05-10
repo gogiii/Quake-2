@@ -1219,7 +1219,9 @@ int Q_strcasecmp (char *s1, char *s2)
 	return Q_strncasecmp (s1, s2, 99999);
 }
 
-
+char *Q_strncpyz(char *dest, const char *src, int destSize) {
+	return strncpy(dest, src, destSize);
+}
 
 void Com_sprintf (char *dest, int size, char *fmt, ...)
 {
