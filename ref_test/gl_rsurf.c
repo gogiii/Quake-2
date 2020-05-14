@@ -160,14 +160,14 @@ void DrawGLWaterPoly (glpoly_t *p)
 	float	*v;
 
 	p = WaterWarpPolyVerts (p);
-	qglBegin (GL_TRIANGLE_FAN);
+	glBegin (GL_TRIANGLE_FAN);
 	v = p->verts[0];
 	for (i=0 ; i<p->numverts ; i++, v+= VERTEXSIZE)
 	{
-		qglTexCoord2f (v[3], v[4]);
-		qglVertex3fv (v);
+		glTexCoord2f (v[3], v[4]);
+		glVertex3fv (v);
 	}
-	qglEnd ();
+	glEnd ();
 }
 void DrawGLWaterPolyLightmap (glpoly_t *p)
 {
@@ -175,14 +175,14 @@ void DrawGLWaterPolyLightmap (glpoly_t *p)
 	float	*v;
 
 	p = WaterWarpPolyVerts (p);
-	qglBegin (GL_TRIANGLE_FAN);
+	glBegin (GL_TRIANGLE_FAN);
 	v = p->verts[0];
 	for (i=0 ; i<p->numverts ; i++, v+= VERTEXSIZE)
 	{
-		qglTexCoord2f (v[5], v[6]);
-		qglVertex3fv (v);
+		glTexCoord2f (v[5], v[6]);
+		glVertex3fv (v);
 	}
-	qglEnd ();
+	glEnd ();
 }
 
 /*
@@ -195,14 +195,14 @@ void DrawGLPoly (glpoly_t *p)
 	int		i;
 	float	*v;
 
-	qglBegin (GL_POLYGON);
+	glBegin (GL_POLYGON);
 	v = p->verts[0];
 	for (i=0 ; i<p->numverts ; i++, v+= VERTEXSIZE)
 	{
-		qglTexCoord2f (v[3], v[4]);
-		qglVertex3fv (v);
+		glTexCoord2f (v[3], v[4]);
+		glVertex3fv (v);
 	}
-	qglEnd ();
+	glEnd ();
 }
 #endif
 
@@ -233,14 +233,14 @@ void DrawGLPoly (msurface_t *fa)
 	else
 		scroll = 0.0f;
 
-	qglBegin (GL_POLYGON);
+	glBegin (GL_POLYGON);
 	v = p->verts[0];
 	for (i=0 ; i<p->numverts ; i++, v+= VERTEXSIZE)
 	{
-		qglTexCoord2f ((v[3] + scroll), v[4]);
-		qglVertex3fv (v);
+		glTexCoord2f ((v[3] + scroll), v[4]);
+		glVertex3fv (v);
 	}
-	qglEnd ();
+	glEnd ();
 }
 //PGM
 //============
@@ -263,9 +263,9 @@ void R_DrawTriangleOutlines (msurface_t *surf, qboolean multitexture, qboolean a
 			return;
 	}
 
-/*	qglDisable (GL_TEXTURE_2D);
-	qglDisable (GL_DEPTH_TEST);
-	qglColor4f (1,1,1,1);
+/*	glDisable (GL_TEXTURE_2D);
+	glDisable (GL_DEPTH_TEST);
+	glColor4f (1,1,1,1);
 
 	for (i=0 ; i<MAX_LIGHTMAPS ; i++)
 	{
@@ -278,27 +278,27 @@ void R_DrawTriangleOutlines (msurface_t *surf, qboolean multitexture, qboolean a
 			{
 				for (j=2 ; j<p->numverts ; j++ )
 				{
-					qglBegin (GL_LINE_STRIP);
-					qglVertex3fv (p->verts[0]);
-					qglVertex3fv (p->verts[j-1]);
-					qglVertex3fv (p->verts[j]);
-					qglVertex3fv (p->verts[0]);
-					qglEnd ();
+					glBegin (GL_LINE_STRIP);
+					glVertex3fv (p->verts[0]);
+					glVertex3fv (p->verts[j-1]);
+					glVertex3fv (p->verts[j]);
+					glVertex3fv (p->verts[0]);
+					glEnd ();
 				}
 			}
 		}
 	}
 
-	qglEnable (GL_DEPTH_TEST);
-	qglEnable (GL_TEXTURE_2D);*/
+	glEnable (GL_DEPTH_TEST);
+	glEnable (GL_TEXTURE_2D);*/
 
 // GuyP: *\/\/\/ gl_showtris fix begin \/\/\/*
 	if (!depthtest)
-	  qglDisable (GL_DEPTH_TEST);
+	  glDisable (GL_DEPTH_TEST);
 
     if (!surf)    // GuyP: Called from R_DrawWorld in non-multitexture mode; need to loop through surfaces defined by non-mtex functions
     {
-        qglDisable (GL_TEXTURE_2D);
+        glDisable (GL_TEXTURE_2D);
         
         for (i = 0; i < MAX_LIGHTMAPS; i++)
         {
@@ -308,57 +308,57 @@ void R_DrawTriangleOutlines (msurface_t *surf, qboolean multitexture, qboolean a
                 {
                     for (j = 2; j < p->numverts; j++)
                     {
-                        qglBegin(GL_LINE_STRIP);
-                            qglColor4f(1, 1, 1, 1);
-                            qglVertex3fv(p->verts[0]);
-                            qglVertex3fv(p->verts[j-1]);
-                            qglVertex3fv(p->verts[j]);
-                            qglVertex3fv(p->verts[0]);
-                        qglEnd();
+                        glBegin(GL_LINE_STRIP);
+                            glColor4f(1, 1, 1, 1);
+                            glVertex3fv(p->verts[0]);
+                            glVertex3fv(p->verts[j-1]);
+                            glVertex3fv(p->verts[j]);
+                            glVertex3fv(p->verts[0]);
+                        glEnd();
                     }
                 }
             }
         }
 
-        qglEnable (GL_TEXTURE_2D);
+        glEnable (GL_TEXTURE_2D);
     }
     else    // Guy: Called from multitexture mode; surface to be rendered in wireframe already passed in
     {
         float    tex_state0, tex_state1;
 
 		if (alphasurf) {
-			qglDisable (GL_BLEND);
+			glDisable (GL_BLEND);
 			GL_TexEnv (GL_REPLACE);
 		}
 		else if (multitexture) {
 			GL_SelectTexture (GL_TEXTURE0);
-			qglGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &tex_state0);
+			glGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &tex_state0);
 
 			GL_SelectTexture (GL_TEXTURE1);
-			qglGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &tex_state1);
+			glGetTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, &tex_state1);
 
 			GL_EnableMultitexture(false);
 		}
-        qglDisable(GL_TEXTURE_2D);
+        glDisable(GL_TEXTURE_2D);
 
         for (p = surf->polys; p; p = p->chain)
         {
             for (j = 2; j < p->numverts; j++)
             {
-                qglBegin(GL_LINE_STRIP);
-                    qglColor4f(1, 1, 1, 1);
-                    qglVertex3fv(p->verts[0]);
-                    qglVertex3fv(p->verts[j-1]);
-                    qglVertex3fv(p->verts[j]);
-                    qglVertex3fv(p->verts[0]);
-                qglEnd();
+                glBegin(GL_LINE_STRIP);
+                    glColor4f(1, 1, 1, 1);
+                    glVertex3fv(p->verts[0]);
+                    glVertex3fv(p->verts[j-1]);
+                    glVertex3fv(p->verts[j]);
+                    glVertex3fv(p->verts[0]);
+                glEnd();
             }
         }
 
-        qglEnable(GL_TEXTURE_2D);
+        glEnable(GL_TEXTURE_2D);
  
 		if (alphasurf) {
-			qglEnable (GL_BLEND);
+			glEnable (GL_BLEND);
 			GL_TexEnv (GL_MODULATE);
 		}
 		else if (multitexture) {
@@ -373,7 +373,7 @@ void R_DrawTriangleOutlines (msurface_t *surf, qboolean multitexture, qboolean a
     }
 
 	if (!depthtest)
-		qglEnable (GL_DEPTH_TEST);
+		glEnable (GL_DEPTH_TEST);
 // GuyP: */\/\/\ gl_showtris fix end /\/\/\*
 }
 
@@ -389,14 +389,14 @@ void DrawGLPolyChain( glpoly_t *p, float soffset, float toffset )
 			float *v;
 			int j;
 
-			qglBegin (GL_POLYGON);
+			glBegin (GL_POLYGON);
 			v = p->verts[0];
 			for (j=0 ; j<p->numverts ; j++, v+= VERTEXSIZE)
 			{
-				qglTexCoord2f (v[5], v[6] );
-				qglVertex3fv (v);
+				glTexCoord2f (v[5], v[6] );
+				glVertex3fv (v);
 			}
-			qglEnd ();
+			glEnd ();
 		}
 	}
 	else
@@ -406,14 +406,14 @@ void DrawGLPolyChain( glpoly_t *p, float soffset, float toffset )
 			float *v;
 			int j;
 
-			qglBegin (GL_POLYGON);
+			glBegin (GL_POLYGON);
 			v = p->verts[0];
 			for (j=0 ; j<p->numverts ; j++, v+= VERTEXSIZE)
 			{
-				qglTexCoord2f (v[5] - soffset, v[6] - toffset );
-				qglVertex3fv (v);
+				glTexCoord2f (v[5] - soffset, v[6] - toffset );
+				glVertex3fv (v);
 			}
-			qglEnd ();
+			glEnd ();
 		}
 	}
 }
@@ -436,7 +436,7 @@ void R_BlendLightmaps (void)
 		return;
 
 	// don't bother writing Z
-	qglDepthMask( 0 );
+	glDepthMask( 0 );
 
 	/*
 	** set the appropriate blending mode unless we're only looking at the
@@ -444,11 +444,11 @@ void R_BlendLightmaps (void)
 	*/
 	if (!gl_lightmap->value)
 	{
-		qglEnable (GL_BLEND);
+		glEnable (GL_BLEND);
 
 		if ( gl_saturatelighting->value )
 		{
-			qglBlendFunc( GL_ONE, GL_ONE );
+			glBlendFunc( GL_ONE, GL_ONE );
 		}
 		else
 		{
@@ -457,20 +457,20 @@ void R_BlendLightmaps (void)
 				switch ( toupper( gl_monolightmap->string[0] ) )
 				{
 				case 'I':
-					qglBlendFunc (GL_ZERO, GL_SRC_COLOR );
+					glBlendFunc (GL_ZERO, GL_SRC_COLOR );
 					break;
 				case 'L':
-					qglBlendFunc (GL_ZERO, GL_SRC_COLOR );
+					glBlendFunc (GL_ZERO, GL_SRC_COLOR );
 					break;
 				case 'A':
 				default:
-					qglBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+					glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 					break;
 				}
 			}
 			else
 			{
-				qglBlendFunc (GL_ZERO, GL_SRC_COLOR );
+				glBlendFunc (GL_ZERO, GL_SRC_COLOR );
 			}
 		}
 	}
@@ -576,9 +576,9 @@ void R_BlendLightmaps (void)
 	/*
 	** restore state
 	*/
-	qglDisable (GL_BLEND);
-	qglBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	qglDepthMask( 1 );
+	glDisable (GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDepthMask( 1 );
 }
 
 
@@ -597,7 +597,7 @@ void R_RenderWarpPoly (msurface_t *fa)
 
 	// warp texture, no lightmaps
 	GL_TexEnv( GL_MODULATE );
-	qglColor4f( gl_state.inverse_intensity, 
+	glColor4f( gl_state.inverse_intensity, 
 			    gl_state.inverse_intensity,
 				gl_state.inverse_intensity,
 				1.0F );
@@ -627,7 +627,7 @@ void R_RenderBrushPoly (msurface_t *fa)
 
 		// warp texture, no lightmaps
 		GL_TexEnv( GL_MODULATE );
-		qglColor4f( gl_state.inverse_intensity, 
+		glColor4f( gl_state.inverse_intensity, 
 			        gl_state.inverse_intensity,
 					gl_state.inverse_intensity,
 					1.0F );
@@ -682,7 +682,7 @@ dynamic:
 
 			GL_Bind( gl_state.lightmap_textures + fa->lightmaptexturenum );
 
-			qglTexSubImage2D( GL_TEXTURE_2D, 0,
+			glTexSubImage2D( GL_TEXTURE_2D, 0,
 							  fa->light_s, fa->light_t, 
 							  smax, tmax, 
 							  gl_lms.external_format,
@@ -726,20 +726,20 @@ void R_DrawAlphaSurfaces (void)
 	// so scale it back down
 	intens = gl_state.inverse_intensity;
 
-	qglEnable (GL_BLEND);
+	glEnable (GL_BLEND);
 	GL_TexEnv( GL_MODULATE );
-	qglBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	for (s=r_alpha_surfaces ; s ; s=s->texturechain)
 	{
 		// go back to the world matrix
-		qglLoadMatrixf (r_world_matrix);
+		glLoadMatrixf (r_world_matrix);
 
 		// Knightmare- disable depth testing for all bmodel surfs (which are not BSP-sorted) except solid alphas
 		if ( s->entity && !((s->flags & SURF_TRANS33) && (s->flags & SURF_TRANS66)) )
-			qglDepthMask (false);
+			glDepthMask (false);
 		else
-			qglDepthMask (true);
+			glDepthMask (true);
 
 		// Knightmare- moving trans brushes
 		if (s->entity)
@@ -752,11 +752,11 @@ void R_DrawAlphaSurfaces (void)
 		// end Knightmare
 		c_brush_polys++;
 		if (s->texinfo->flags & SURF_TRANS33)
-			qglColor4f (intens,intens,intens,0.33);
+			glColor4f (intens,intens,intens,0.33);
 		else if (s->texinfo->flags & SURF_TRANS66)
-			qglColor4f (intens,intens,intens,0.66);
+			glColor4f (intens,intens,intens,0.66);
 		else
-			qglColor4f (intens,intens,intens,1);
+			glColor4f (intens,intens,intens,1);
 
 
 		if (s->flags & SURF_DRAWTURB)
@@ -769,13 +769,13 @@ void R_DrawAlphaSurfaces (void)
 	}
 
 	// Knightmare- go back to the world matrix after shifting trans faces
-	qglLoadMatrixf (r_world_matrix);
+	glLoadMatrixf (r_world_matrix);
 
-	qglBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	GL_TexEnv( GL_REPLACE );
-	qglColor4f (1,1,1,1);
-	qglDisable (GL_BLEND);
-	qglDepthMask (true);
+	glColor4f (1,1,1,1);
+	glDisable (GL_BLEND);
+	glDepthMask (true);
 
 	r_alpha_surfaces = NULL;
 }
@@ -879,7 +879,7 @@ void R_UpdateSurfaceLightmap (msurface_t *surf)
 	int			map, smax, tmax;
 	qboolean	is_dynamic = false;
 
-	if ( !qglMultiTexCoord2f || (r_fullbright->value != 0) )
+	if ( !glMultiTexCoord2f || (r_fullbright->value != 0) )
 		return;
 	if ( surf->texinfo->flags & (SURF_SKY|SURF_WARP) )
 		return;
@@ -948,7 +948,7 @@ void R_RebuildLightmaps (void)
 		if ( !gl_config.newTexFormat )
 		{	// update full width of lm texture, because glPixelStorei isn't supported
 			GL_MBind( GL_TEXTURE1, gl_state.lightmap_textures + i );
-			qglTexSubImage2D (GL_TEXTURE_2D, 0,
+			glTexSubImage2D (GL_TEXTURE_2D, 0,
 					0, gl_lms.lightrect[i].top, 
 					LM_BLOCK_WIDTH, (gl_lms.lightrect[i].bottom - gl_lms.lightrect[i].top), 
 					gl_lms.external_format, gl_lms.type,
@@ -957,11 +957,11 @@ void R_RebuildLightmaps (void)
 		else
 		{
 			if (!storeSet) {
-				qglPixelStorei (GL_UNPACK_ROW_LENGTH, LM_BLOCK_WIDTH);
+				glPixelStorei (GL_UNPACK_ROW_LENGTH, LM_BLOCK_WIDTH);
 				storeSet = true;
 			}
 			GL_MBind( GL_TEXTURE1, gl_state.lightmap_textures + i );
-			qglTexSubImage2D (GL_TEXTURE_2D, 0,
+			glTexSubImage2D (GL_TEXTURE_2D, 0,
 							gl_lms.lightrect[i].left, gl_lms.lightrect[i].top,
 							(gl_lms.lightrect[i].right - gl_lms.lightrect[i].left), (gl_lms.lightrect[i].bottom - gl_lms.lightrect[i].top),
 							gl_lms.external_format, gl_lms.type,
@@ -975,7 +975,7 @@ void R_RebuildLightmaps (void)
 		gl_lms.lightrect[i].bottom = 0;
 	}
 	if (storeSet)
-		qglPixelStorei (GL_UNPACK_ROW_LENGTH, 0);
+		glPixelStorei (GL_UNPACK_ROW_LENGTH, 0);
 }
 #endif // BATCH_LM_UPDATES
 // end Knightmare
@@ -1031,7 +1031,7 @@ dynamic:
 			lmtex = 0;
 		}
 
-		qglTexSubImage2D( GL_TEXTURE_2D, 0,
+		glTexSubImage2D( GL_TEXTURE_2D, 0,
 						  surf->light_s, surf->light_t, 
 						  smax, tmax, 
 						  gl_lms.external_format,
@@ -1045,7 +1045,7 @@ dynamic:
 
 	// Knighmare- Alpha test flag
 	if (surf->texinfo->flags & SURF_ALPHATEST)
-		qglEnable (GL_ALPHA_TEST);
+		glEnable (GL_ALPHA_TEST);
 
 	GL_MBind( gl_texture0, image->texnum );
 	GL_MBind( gl_texture1, gl_state.lightmap_textures + lmtex );
@@ -1062,17 +1062,17 @@ dynamic:
 	for ( p = surf->polys; p; p = p->chain )
 	{
 		v = p->verts[0];
-		qglBegin (GL_POLYGON);
+		glBegin (GL_POLYGON);
 		for (i=0 ; i< nv; i++, v+= VERTEXSIZE)
 		{
-			qglMultiTexCoord2f (gl_texture0, (v[3]+scroll), v[4]);
-			qglMultiTexCoord2f (gl_texture1, v[5], v[6]);
-			qglVertex3fv (v);
+			glMultiTexCoord2f (gl_texture0, (v[3]+scroll), v[4]);
+			glMultiTexCoord2f (gl_texture1, v[5], v[6]);
+			glVertex3fv (v);
 		}
-		qglEnd ();
+		glEnd ();
 	}
 
-	qglDisable (GL_ALPHA_TEST); // Knightmare- Alpha test flag
+	glDisable (GL_ALPHA_TEST); // Knightmare- Alpha test flag
 }
 
 
@@ -1127,8 +1127,8 @@ void R_DrawInlineBModel (void)
 
 	if ( currententity->flags & RF_TRANSLUCENT )
 	{
-		qglEnable (GL_BLEND);
-		qglColor4f (1,1,1,0.25);
+		glEnable (GL_BLEND);
+		glColor4f (1,1,1,0.25);
 		GL_TexEnv( GL_MODULATE );
 	}
 #endif
@@ -1202,8 +1202,8 @@ void R_DrawInlineBModel (void)
 	// Knightmare- draw using texturechains
 	if (currententity->flags & RF_TRANSLUCENT)
 	{
-		qglEnable (GL_BLEND);
-		qglColor4f (1,1,1,0.25);
+		glEnable (GL_BLEND);
+		glColor4f (1,1,1,0.25);
 		GL_TexEnv( GL_MODULATE );
 	}
 
@@ -1217,8 +1217,8 @@ void R_DrawInlineBModel (void)
 	}
 	else
 	{
-		qglDisable (GL_BLEND);
-		qglColor4f (1,1,1,1);
+		glDisable (GL_BLEND);
+		glColor4f (1,1,1,1);
 		GL_TexEnv( GL_REPLACE );
 	}
 }
@@ -1259,7 +1259,7 @@ void R_DrawBrushModel (entity_t *e)
 	if (R_CullBox (mins, maxs))
 		return;
 
-	qglColor3f (1,1,1);
+	glColor3f (1,1,1);
 	memset (gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 
 	VectorSubtract (r_newrefdef.vieworg, e->origin, modelorg);
@@ -1275,7 +1275,7 @@ void R_DrawBrushModel (entity_t *e)
 		modelorg[2] = DotProduct (temp, up);
 	}
 
-    qglPushMatrix ();
+    glPushMatrix ();
 	e->angles[0] = -e->angles[0];	// stupid quake bug
 	e->angles[2] = -e->angles[2];	// stupid quake bug
 	R_RotateForEntity (e, true);
@@ -1299,7 +1299,7 @@ void R_DrawBrushModel (entity_t *e)
 	GL_EnableMultitexture (false);
 #endif
 
-	qglPopMatrix ();
+	glPopMatrix ();
 }
 
 /*
@@ -1476,7 +1476,7 @@ void R_DrawWorld (void)
 
 	gl_state.currenttextures[0] = gl_state.currenttextures[1] = -1;
 
-	qglColor3f (1,1,1);
+	glColor3f (1,1,1);
 	memset (gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 	R_ClearSkyBox ();
 
@@ -1644,8 +1644,8 @@ static void LM_UploadBlock( qboolean dynamic )
 	}
 
 	GL_Bind( gl_state.lightmap_textures + texture );
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	if ( dynamic )
 	{
@@ -1657,7 +1657,7 @@ static void LM_UploadBlock( qboolean dynamic )
 				height = gl_lms.allocated[i];
 		}
 
-		qglTexSubImage2D( GL_TEXTURE_2D, 
+		glTexSubImage2D( GL_TEXTURE_2D, 
 						  0,
 						  0, 0,
 						  LM_BLOCK_WIDTH, height,
@@ -1669,7 +1669,7 @@ static void LM_UploadBlock( qboolean dynamic )
 	}
 	else
 	{
-		qglTexImage2D( GL_TEXTURE_2D, 
+		glTexImage2D( GL_TEXTURE_2D, 
 					   0, 
 					   gl_lms.internal_format,
 					   LM_BLOCK_WIDTH, LM_BLOCK_HEIGHT, 
@@ -1972,9 +1972,9 @@ void GL_BeginBuildingLightmaps (model_t *m)
 	** initialize the dynamic lightmap texture
 	*/
 	GL_Bind( gl_state.lightmap_textures + 0 );
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	qglTexImage2D( GL_TEXTURE_2D, 
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D( GL_TEXTURE_2D, 
 				   0, 
 				   gl_lms.internal_format,
 				   LM_BLOCK_WIDTH, LM_BLOCK_HEIGHT, 

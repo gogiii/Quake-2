@@ -36,6 +36,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "glw_win_test.h"
 #include "../win32/winquake.h"
 
+PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
+PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
+
+PFNGLLOCKARRAYSEXTPROC glLockArraysEXT;
+PFNGLUNLOCKARRAYSEXTPROC glUnlockArraysEXT;
+
+PFNGLPOINTPARAMETERFPROC glPointParameterf;
+PFNGLPOINTPARAMETERFVPROC glPointParameterfv;
+
+PFNGLACTIVETEXTUREPROC glActiveTexture;
+PFNGLCLIENTACTIVETEXTUREPROC glClientActiveTexture;
+PFNGLMULTITEXCOORD2FPROC glMultiTexCoord2f;
+
+PFNGLCOLORTABLEPROC glColorTable;
+
 static qboolean GLimp_SwitchFullscreen( int width, int height );
 qboolean GLimp_InitGL (void);
 
@@ -98,7 +113,7 @@ static qboolean VerifyDriver( void )
 {
 	char buffer[1024];
 
-	strcpy( buffer, qglGetString( GL_RENDERER ) );
+	strcpy( buffer, glGetString( GL_RENDERER ) );
 	strlwr( buffer );
 	if ( strcmp( buffer, "gdi generic" ) == 0 )
 		if ( !glw_state.mcd_accelerated )
@@ -363,11 +378,11 @@ void GLimp_Shutdown( void )
 	// Knightmare- added Vic's hardware gamma ramp
 	ShutdownGammaRamp ();
 
-	if ( qwglMakeCurrent && !qwglMakeCurrent( NULL, NULL ) )
+	if ( wglMakeCurrent && !wglMakeCurrent( NULL, NULL ) )
 		ri.Con_Printf( PRINT_ALL, "ref_gl::R_Shutdown() - wglMakeCurrent failed\n");
 	if ( glw_state.hGLRC )
 	{
-		if (  qwglDeleteContext && !qwglDeleteContext( glw_state.hGLRC ) )
+		if (  wglDeleteContext && !wglDeleteContext( glw_state.hGLRC ) )
 			ri.Con_Printf( PRINT_ALL, "ref_gl::R_Shutdown() - wglDeleteContext failed\n");
 		glw_state.hGLRC = NULL;
 	}
@@ -513,22 +528,22 @@ qboolean GLimp_InitGL (void)
 		return false;
 	}
 
-	if ( glw_state.minidriver )
+	/*if ( glw_state.minidriver )
 	{
-		if ( (pixelformat = qwglChoosePixelFormat( glw_state.hDC, &pfd)) == 0 )
+		if ( (pixelformat = wglChoosePixelFormat( glw_state.hDC, &pfd)) == 0 )
 		{
-			ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglChoosePixelFormat failed\n");
+			ri.Con_Printf (PRINT_ALL, "GLimp_Init() - wglChoosePixelFormat failed\n");
 			return false;
 		}
-		if ( qwglSetPixelFormat( glw_state.hDC, pixelformat, &pfd) == FALSE )
+		if ( wglSetPixelFormat( glw_state.hDC, pixelformat, &pfd) == FALSE )
 		{
-			ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglSetPixelFormat failed\n");
+			ri.Con_Printf (PRINT_ALL, "GLimp_Init() - wglSetPixelFormat failed\n");
 			return false;
 		}
-		qwglDescribePixelFormat( glw_state.hDC, pixelformat, sizeof( pfd ), &pfd );
+		wglDescribePixelFormat( glw_state.hDC, pixelformat, sizeof( pfd ), &pfd );
 	}
 	else
-	{
+	{*/
 		if ( ( pixelformat = ChoosePixelFormat( glw_state.hDC, &pfd)) == 0 )
 		{
 			ri.Con_Printf (PRINT_ALL, "GLimp_Init() - ChoosePixelFormat failed\n");
@@ -554,7 +569,7 @@ qboolean GLimp_InitGL (void)
 		{
 			glw_state.mcd_accelerated = true;
 		}
-	}
+	//}
 
 	/*
 	** report if stereo is desired but unavailable
@@ -570,16 +585,16 @@ qboolean GLimp_InitGL (void)
 	** startup the OpenGL subsystem by creating a context and making
 	** it current
 	*/
-	if ( ( glw_state.hGLRC = qwglCreateContext( glw_state.hDC ) ) == 0 )
+	if ( ( glw_state.hGLRC = wglCreateContext( glw_state.hDC ) ) == 0 )
 	{
-		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglCreateContext failed\n");
+		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - wglCreateContext failed\n");
 
 		goto fail;
 	}
 
-    if ( !qwglMakeCurrent( glw_state.hDC, glw_state.hGLRC ) )
+    if ( !wglMakeCurrent( glw_state.hDC, glw_state.hGLRC ) )
 	{
-		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - qwglMakeCurrent failed\n");
+		ri.Con_Printf (PRINT_ALL, "GLimp_Init() - wglMakeCurrent failed\n");
 
 		goto fail;
 	}
@@ -603,7 +618,7 @@ qboolean GLimp_InitGL (void)
 		char buffer[1024];
 
 		gl_config.have_stencil = false;
-		strcpy( buffer, qglGetString( GL_RENDERER ) );
+		strcpy( buffer, glGetString( GL_RENDERER ) );
 		strlwr( buffer );
 		if (strstr(buffer, "Voodoo3")) {
 			ri.Con_Printf( PRINT_ALL, "... Voodoo3 has no stencil buffer\n" );
@@ -620,12 +635,23 @@ qboolean GLimp_InitGL (void)
 	//	gl_config.have_stencil = true;
 	// end Knightmare
 
+	// init extensions
+	wglSwapIntervalEXT = wglGetProcAddress("wglSwapIntervalEXT");
+	glLockArraysEXT = wglGetProcAddress("glLockArraysEXT");
+	glUnlockArraysEXT = wglGetProcAddress("glUnlockArraysEXT");
+	glPointParameterf = wglGetProcAddress("glPointParameterf");
+	glPointParameterfv = wglGetProcAddress("glPointParameterfv");
+	glActiveTexture = wglGetProcAddress("glActiveTexture");
+	glClientActiveTexture = wglGetProcAddress("glClientActiveTexture");
+	glMultiTexCoord2f = wglGetProcAddress("glMultiTexCoord2f");
+	glColorTable = wglGetProcAddress("glColorTable");
+
 	return true;
 
 fail:
 	if ( glw_state.hGLRC )
 	{
-		qwglDeleteContext( glw_state.hGLRC );
+		wglDeleteContext( glw_state.hGLRC );
 		glw_state.hGLRC = NULL;
 	}
 
@@ -655,15 +681,15 @@ void GLimp_BeginFrame( float camera_separation )
 
 	if ( camera_separation < 0 && gl_state.stereo_enabled )
 	{
-		qglDrawBuffer( GL_BACK_LEFT );
+		glDrawBuffer( GL_BACK_LEFT );
 	}
 	else if ( camera_separation > 0 && gl_state.stereo_enabled )
 	{
-		qglDrawBuffer( GL_BACK_RIGHT );
+		glDrawBuffer( GL_BACK_RIGHT );
 	}
 	else
 	{
-		qglDrawBuffer( GL_BACK );
+		glDrawBuffer( GL_BACK );
 	}
 }
 
@@ -678,7 +704,7 @@ void GLimp_EndFrame (void)
 {
 	int		err;
 
-	err = qglGetError();
+	err = glGetError();
 //	assert( err == GL_NO_ERROR );
 	// Knightmare- Output error code instead
 	if (err != GL_NO_ERROR)
@@ -688,7 +714,7 @@ void GLimp_EndFrame (void)
 
 	if ( stricmp( gl_drawbuffer->string, "GL_BACK" ) == 0 )
 	{
-		if ( !qwglSwapBuffers( glw_state.hDC ) )
+		if ( !SwapBuffers( glw_state.hDC ) )
 			ri.Sys_Error( ERR_FATAL, "GLimp_EndFrame() - SwapBuffers() failed!\n" );
 	}
 }

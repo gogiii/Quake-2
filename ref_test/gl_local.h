@@ -24,16 +24,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdio.h>
 
-#include <GL/gl.h>
+//#include "qgl.h"
+/*#include <GL/gl.h>
 #include <GL/glu.h>
-#include "glext.h" // Knightmare- include new extension header
+#include <GL/glext.h>
+#include <GL/wglext.h>*/
+
 #include <math.h>
 
-#ifndef __linux__
+/*#ifndef __linux__
 #ifndef GL_COLOR_INDEX8_EXT
 #define GL_COLOR_INDEX8_EXT GL_COLOR_INDEX
 #endif
-#endif
+#endif*/
 
 #include "../client/ref.h"
 

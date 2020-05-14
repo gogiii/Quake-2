@@ -48,7 +48,7 @@ void GL_SetTexturePalette( unsigned palette[256] )
 	int i;
 	unsigned char temptable[768];
 
-	if ( qglColorTableEXT && gl_ext_palettedtexture->value )
+	if ( glColorTable && gl_ext_palettedtexture->value )
 	{
 		for ( i = 0; i < 256; i++ )
 		{
@@ -57,7 +57,7 @@ void GL_SetTexturePalette( unsigned palette[256] )
 			temptable[i*3+2] = ( palette[i] >> 16 ) & 0xff;
 		}
 
-		qglColorTableEXT( GL_SHARED_TEXTURE_PALETTE_EXT,
+		glColorTable( GL_SHARED_TEXTURE_PALETTE_EXT,
 						   GL_RGB,
 						   256,
 						   GL_RGB,
@@ -74,14 +74,14 @@ void GL_EnableMultitexture( qboolean enable )
 	if ( enable )
 	{
 		GL_SelectTexture( GL_TEXTURE1 );
-		qglEnable( GL_TEXTURE_2D );
+		glEnable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
 		gl_state.multitextureEnabled = true;	// Knightmare added
 	}
 	else
 	{
 		GL_SelectTexture( GL_TEXTURE1 );
-		qglDisable( GL_TEXTURE_2D );
+		glDisable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
 		gl_state.multitextureEnabled = false;	// Knightmare added
 	}
@@ -112,14 +112,14 @@ void GL_SelectTexture( GLenum texture )
 
 	gl_state.currenttmu = tmu;
 
-	if ( qglSelectTextureSGIS )
+	/*if ( glSelectTextureSGIS )
 	{
-		qglSelectTextureSGIS( texture );
+		glSelectTextureSGIS( texture );
 	}
-	else if ( qglActiveTextureARB )
+	else */if ( glActiveTexture )
 	{
-		qglActiveTextureARB( texture );
-		qglClientActiveTextureARB( texture );
+		glActiveTexture( texture );
+		glClientActiveTexture( texture );
 	}
 }
 
@@ -129,7 +129,7 @@ void GL_TexEnv( GLenum mode )
 
 	if ( mode != lastmodes[gl_state.currenttmu] )
 	{
-		qglTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode );
+		glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode );
 		lastmodes[gl_state.currenttmu] = mode;
 	}
 }
@@ -143,7 +143,7 @@ void GL_Bind (int texnum)
 	if ( gl_state.currenttextures[gl_state.currenttmu] == texnum)
 		return;
 	gl_state.currenttextures[gl_state.currenttmu] = texnum;
-	qglBindTexture (GL_TEXTURE_2D, texnum);
+	glBindTexture (GL_TEXTURE_2D, texnum);
 }
 
 void GL_MBind( GLenum target, int texnum )
@@ -289,7 +289,7 @@ void GL_UpdateAnisoMode (void)
 			GL_Bind (glt->texnum);
 			// Set anisotropic filter if supported and enabled
 			if (gl_config.anisotropic && gl_anisotropic->value)
-				qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, gl_anisotropic->value);
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, gl_anisotropic->value);
 		}
 	}
 }
@@ -334,12 +334,12 @@ void GL_TextureMode( char *string )
 		if (glt->type != it_pic && glt->type != it_sky )
 		{
 			GL_Bind (glt->texnum);
-			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 
 			// Set anisotropic filter if supported and enabled
 			if (gl_config.anisotropic && gl_anisotropic->value)
-				qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, gl_anisotropic->value);
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, gl_anisotropic->value);
 		}
 	}
 }
@@ -1195,8 +1195,8 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 			comp = samples;
 		}
 	}
-//	isPaletted = (qglColorTableEXT && gl_ext_palettedtexture->value && samples == gl_solid_format);
-	isPaletted = (qglColorTableEXT && gl_ext_palettedtexture->value && !hasAlpha);
+//	isPaletted = (glColorTableEXT && gl_ext_palettedtexture->value && samples == gl_solid_format);
+	isPaletted = (glColorTable && gl_ext_palettedtexture->value && !hasAlpha);
 
 	// find sizes to scale to
 	if ( gl_config.arbTextureNonPowerOfTwo && (!mipmap || gl_nonpoweroftwo_mipmaps->value) ) {
@@ -1241,11 +1241,11 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 		uploaded_paletted = true;
 		paletted_texture = malloc((scaled_width * scaled_height) * 4);
 		GL_BuildPalettedTexture (paletted_texture, (unsigned char *)scaled, scaled_width, scaled_height);
-		qglTexImage2D (GL_TEXTURE_2D, 0, GL_COLOR_INDEX8_EXT, scaled_width, scaled_height, 0,
+		glTexImage2D (GL_TEXTURE_2D, 0, GL_COLOR_INDEX8_EXT, scaled_width, scaled_height, 0,
 						GL_COLOR_INDEX, GL_UNSIGNED_BYTE, paletted_texture);
 	}
 	else
-		qglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+		glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 
 	if (mipmap)
 	{
@@ -1262,11 +1262,11 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 			{
 				uploaded_paletted = true;
 				GL_BuildPalettedTexture (paletted_texture, (unsigned char *)scaled, mip_width, mip_height);
-				qglTexImage2D (GL_TEXTURE_2D, miplevel, GL_COLOR_INDEX8_EXT, mip_width, mip_height, 0,
+				glTexImage2D (GL_TEXTURE_2D, miplevel, GL_COLOR_INDEX8_EXT, mip_width, mip_height, 0,
 								GL_COLOR_INDEX, GL_UNSIGNED_BYTE, paletted_texture);
 			}
 			else
-				qglTexImage2D (GL_TEXTURE_2D, miplevel, comp, mip_width, mip_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+				glTexImage2D (GL_TEXTURE_2D, miplevel, comp, mip_width, mip_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 		}
 	}
 
@@ -1275,12 +1275,12 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 
 	upload_width = scaled_width;	upload_height = scaled_height;
 
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (mipmap) ? gl_filter_min : gl_filter_max);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (mipmap) ? gl_filter_min : gl_filter_max);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 
 	// Set anisotropic filter if supported and enabled
 	if (mipmap && gl_config.anisotropic && gl_anisotropic->value)
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, gl_anisotropic->value);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, gl_anisotropic->value);
 
 //	return (samples == gl_alpha_format);
 	return hasAlpha;
@@ -1359,12 +1359,12 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 	if (mipmap)
 		gluBuild2DMipmaps (GL_TEXTURE_2D, samples, width, height, GL_RGBA, GL_UNSIGNED_BYTE, trans);
 	else if (scaled_width == width && scaled_height == height)
-		qglTexImage2D (GL_TEXTURE_2D, 0, comp, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, trans);
+		glTexImage2D (GL_TEXTURE_2D, 0, comp, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, trans);
 	else
 	{
 		gluScaleImage (GL_RGBA, width, height, GL_UNSIGNED_BYTE, trans,
 			scaled_width, scaled_height, GL_UNSIGNED_BYTE, scaled);
-		qglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+		glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	}
 #else
 
@@ -1372,11 +1372,11 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 	{
 		if (!mipmap)
 		{
-			if ( qglColorTableEXT && gl_ext_palettedtexture->value && samples == gl_solid_format )
+			if ( glColorTableEXT && gl_ext_palettedtexture->value && samples == gl_solid_format )
 			{
 				uploaded_paletted = true;
 				GL_BuildPalettedTexture( paletted_texture, ( unsigned char * ) data, scaled_width, scaled_height );
-				qglTexImage2D( GL_TEXTURE_2D,
+				glTexImage2D( GL_TEXTURE_2D,
 							  0,
 							  GL_COLOR_INDEX8_EXT,
 							  scaled_width,
@@ -1388,7 +1388,7 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 			}
 			else
 			{
-				qglTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+				glTexImage2D (GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 			}
 			goto done;
 		}
@@ -1399,11 +1399,11 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 
 	GL_LightScaleTexture (scaled, scaled_width, scaled_height, !mipmap );
 
-	if ( qglColorTableEXT && gl_ext_palettedtexture->value && ( samples == gl_solid_format ) )
+	if ( glColorTableEXT && gl_ext_palettedtexture->value && ( samples == gl_solid_format ) )
 	{
 		uploaded_paletted = true;
 		GL_BuildPalettedTexture( paletted_texture, ( unsigned char * ) scaled, scaled_width, scaled_height );
-		qglTexImage2D( GL_TEXTURE_2D,
+		glTexImage2D( GL_TEXTURE_2D,
 					  0,
 					  GL_COLOR_INDEX8_EXT,
 					  scaled_width,
@@ -1415,7 +1415,7 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 	}
 	else
 	{
-		qglTexImage2D( GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled );
+		glTexImage2D( GL_TEXTURE_2D, 0, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled );
 	}
 
 	if (mipmap)
@@ -1433,11 +1433,11 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 			if (scaled_height < 1)
 				scaled_height = 1;
 			miplevel++;
-			if ( qglColorTableEXT && gl_ext_palettedtexture->value && samples == gl_solid_format )
+			if ( glColorTableEXT && gl_ext_palettedtexture->value && samples == gl_solid_format )
 			{
 				uploaded_paletted = true;
 				GL_BuildPalettedTexture( paletted_texture, ( unsigned char * ) scaled, scaled_width, scaled_height );
-				qglTexImage2D( GL_TEXTURE_2D,
+				glTexImage2D( GL_TEXTURE_2D,
 							  miplevel,
 							  GL_COLOR_INDEX8_EXT,
 							  scaled_width,
@@ -1449,7 +1449,7 @@ qboolean GL_Upload32 (unsigned *data, int width, int height,  qboolean mipmap)
 			}
 			else
 			{
-				qglTexImage2D (GL_TEXTURE_2D, miplevel, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+				glTexImage2D (GL_TEXTURE_2D, miplevel, comp, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 			}
 		}
 	}
@@ -1459,13 +1459,13 @@ done: ;
 
 	if (mipmap)
 	{
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	}
 	else
 	{
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	}
 
 	return (samples == gl_alpha_format);
@@ -1507,11 +1507,11 @@ qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboole
 	if (s > sizeof(trans)/4)
 		ri.Sys_Error (ERR_DROP, "GL_Upload8: too large");
 
-	if ( qglColorTableEXT && 
+	if ( glColorTable && 
 		 gl_ext_palettedtexture->value && 
 		 is_sky )
 	{
-		qglTexImage2D( GL_TEXTURE_2D,
+		glTexImage2D( GL_TEXTURE_2D,
 					  0,
 					  GL_COLOR_INDEX8_EXT,
 					  width,
@@ -1521,8 +1521,8 @@ qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboole
 					  GL_UNSIGNED_BYTE,
 					  data );
 
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	}
 	else
 	{
@@ -1793,7 +1793,7 @@ void GL_FreeUnusedImages (void)
 		if (image->type == it_pic)
 			continue;		// don't free pics
 		// free it
-		qglDeleteTextures (1, &image->texnum);
+		glDeleteTextures (1, &image->texnum);
 		memset (image, 0, sizeof(*image));
 	}
 }
@@ -1859,7 +1859,7 @@ void	GL_InitImages (void)
 
 	Draw_GetPalette ();
 
-	if ( qglColorTableEXT )
+	if ( glColorTable )
 	{
 		ri.FS_LoadFile( "pics/16to8.dat", &gl_state.d_16to8table );
 		if ( !gl_state.d_16to8table )
@@ -1915,7 +1915,7 @@ void	GL_ShutdownImages (void)
 		if (!image->registration_sequence)
 			continue;		// free image_t slot
 		// free it
-		qglDeleteTextures (1, &image->texnum);
+		glDeleteTextures (1, &image->texnum);
 		memset (image, 0, sizeof(*image));
 	}
 }

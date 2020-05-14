@@ -44,4 +44,8 @@ typedef struct
 
 extern glwstate_t glw_state;
 
+// extensions
+
+
+
 #endif
