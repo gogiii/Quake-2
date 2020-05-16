@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qgl.h"
 
-#define	REF_VERSION	"GL 0.02" // Knightmare changed, was 0.01
+#define	REF_VERSION	"GL 0.03" // Knightmare changed, was 0.01
 
 // up / down
 #define	PITCH	0
@@ -468,7 +468,7 @@ void GL_DrawParticles( int n, const particle_t particles[], const unsigned color
 #define GL_RENDERER_OTHER		0x80000000
 */
 // Knightmare- new vendor list
-enum {
+/*enum {
 	GL_RENDERER_DEFAULT		= 1 << 0,
 
 	GL_RENDERER_MCD			= 1 << 1,
@@ -493,7 +493,7 @@ enum {
 
 	GL_RENDERER_MATROX		= 1 << 18,
 	GL_RENDERER_INTEL		= 1 << 19
-};
+};*/
 
 typedef struct
 {

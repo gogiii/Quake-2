@@ -155,8 +155,8 @@ void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 		GL_EnableMultitexture(false);
 	// end Knightmare
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
-		glDisable (GL_ALPHA_TEST);
+	//if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
+	//	glDisable (GL_ALPHA_TEST);
 
 	GL_Bind (gl->texnum);
 	glBegin (GL_QUADS);
@@ -170,8 +170,8 @@ void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 	glVertex2f (x, y+h);
 	glEnd ();
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
-		glEnable (GL_ALPHA_TEST);
+	//if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
+	//	glEnable (GL_ALPHA_TEST);
 }
 
 
@@ -193,8 +193,8 @@ void Draw_Pic (int x, int y, char *pic)
 	if (scrap_dirty)
 		Scrap_Upload ();
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
-		glDisable (GL_ALPHA_TEST);
+	//if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) && !gl->has_alpha)
+	//	glDisable (GL_ALPHA_TEST);
 
 	GL_Bind (gl->texnum);
 	glBegin (GL_QUADS);
@@ -208,8 +208,8 @@ void Draw_Pic (int x, int y, char *pic)
 	glVertex2f (x, y+gl->height);
 	glEnd ();
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !gl->has_alpha)
-		glEnable (GL_ALPHA_TEST);
+	//if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !gl->has_alpha)
+	//	glEnable (GL_ALPHA_TEST);
 }
 
 /*
@@ -231,8 +231,8 @@ void Draw_TileClear (int x, int y, int w, int h, char *pic)
 		return;
 	}
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !image->has_alpha)
-		glDisable (GL_ALPHA_TEST);
+	//if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !image->has_alpha)
+	//	glDisable (GL_ALPHA_TEST);
 
 	GL_Bind (image->texnum);
 	glBegin (GL_QUADS);
@@ -246,8 +246,8 @@ void Draw_TileClear (int x, int y, int w, int h, char *pic)
 	glVertex2f (x, y+h);
 	glEnd ();
 
-	if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !image->has_alpha)
-		glEnable (GL_ALPHA_TEST);
+	//if ( ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) )  && !image->has_alpha)
+	//	glEnable (GL_ALPHA_TEST);
 }
 
 
@@ -420,8 +420,8 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) 
-		glDisable (GL_ALPHA_TEST);
+	//if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) 
+	//	glDisable (GL_ALPHA_TEST);
 
 	glBegin (GL_QUADS);
 	glTexCoord2f (0, 0);
@@ -439,8 +439,8 @@ void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data
 	if (image8)
 		free(image8);
 
-	if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) 
-		glEnable (GL_ALPHA_TEST);
+	//if ( ( gl_config.renderer == GL_RENDERER_MCD ) || ( gl_config.renderer & GL_RENDERER_RENDITION ) ) 
+	//	glEnable (GL_ALPHA_TEST);
 }
 #else
 void Draw_StretchRaw (int x, int y, int w, int h, int cols, int rows, byte *data)

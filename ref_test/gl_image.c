@@ -1867,10 +1867,10 @@ void	GL_InitImages (void)
 	}
 
 //	if ( gl_config.renderer & ( GL_RENDERER_VOODOO | GL_RENDERER_VOODOO2 ) )
-	if ( gl_config.renderer == GL_RENDERER_VOODOO )
+	/*if ( gl_config.renderer == GL_RENDERER_VOODOO )
 	{
 		g = 1.0F;
-	}
+	}*/
 
 	for ( i = 0; i < 256; i++ )
 	{

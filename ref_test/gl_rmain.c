@@ -819,42 +819,17 @@ R_Clear
 */
 void R_Clear (void)
 {
-	GLbitfield	clearbits;	// Knightmare added
+	GLbitfield	clearbits = 0;	// Knightmare added
 
-	if (gl_ztrick->value)
-	{
-		static int trickframe;
-
-		if (gl_clear->value)
-		//	glClear (GL_COLOR_BUFFER_BIT);
-			clearbits |=  GL_COLOR_BUFFER_BIT;
-
-		trickframe++;
-		if (trickframe & 1)
-		{
-			gldepthmin = 0;
-			gldepthmax = 0.49999;
-			glDepthFunc (GL_LEQUAL);
-		}
-		else
-		{
-			gldepthmin = 1;
-			gldepthmax = 0.5;
-			glDepthFunc (GL_GEQUAL);
-		}
-	}
+	if (gl_clear->value)
+	//	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		clearbits |=  (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Knightmare changed
 	else
-	{
-		if (gl_clear->value)
-		//	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			clearbits |=  (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Knightmare changed
-		else
-		//	glClear (GL_DEPTH_BUFFER_BIT);
-			clearbits |=  GL_DEPTH_BUFFER_BIT;	// Knightmare changed
-		gldepthmin = 0;
-		gldepthmax = 1;
-		glDepthFunc (GL_LEQUAL);
-	}
+	//	glClear (GL_DEPTH_BUFFER_BIT);
+		clearbits |=  GL_DEPTH_BUFFER_BIT;	// Knightmare changed
+	gldepthmin = 0;
+	gldepthmax = 1;
+	glDepthFunc (GL_LEQUAL);
 
 	glDepthRange (gldepthmin, gldepthmax);
 
@@ -865,8 +840,6 @@ void R_Clear (void)
 	//	glClear(GL_STENCIL_BUFFER_BIT);
 		clearbits |=  GL_STENCIL_BUFFER_BIT;	// Knightmare changed
 	}
-
-//	glDepthRange (gldepthmin, gldepthmax);
 
 	if (clearbits)
 		glClear(clearbits);
@@ -968,8 +941,8 @@ static void GL_DrawStereoPattern( void )
 	int i;
 
 //	if ( !( gl_config.renderer & GL_RENDERER_INTERGRAPH ) )
-	if ( !( gl_config.renderer & GL_RENDERER_REALIZM ) )
-		return;
+	//if ( !( gl_config.renderer & GL_RENDERER_REALIZM ) )
+	//	return;
 
 	if ( !gl_state.stereo_enabled )
 		return;
@@ -1340,33 +1313,9 @@ int R_Init ( void *hinstance, void *hWnd )
 
 	strcpy( vendor_buffer, gl_config.vendor_string );
 	strlwr( vendor_buffer );
-/*
-	if ( strstr( renderer_buffer, "voodoo" ) )
-	{
-		if ( !strstr( renderer_buffer, "rush" ) )
-			gl_config.renderer = GL_RENDERER_VOODOO;
-		else
-			gl_config.renderer = GL_RENDERER_VOODOO_RUSH;
-	}
-	else if ( strstr( vendor_buffer, "sgi" ) )
-		gl_config.renderer = GL_RENDERER_SGI;
-	else if ( strstr( renderer_buffer, "permedia" ) )
-		gl_config.renderer = GL_RENDERER_PERMEDIA2;
-	else if ( strstr( renderer_buffer, "glint" ) )
-		gl_config.renderer = GL_RENDERER_GLINT_MX;
-	else if ( strstr( renderer_buffer, "glzicd" ) )
-		gl_config.renderer = GL_RENDERER_REALIZM;
-	else if ( strstr( renderer_buffer, "gdi" ) )
-		gl_config.renderer = GL_RENDERER_MCD;
-	else if ( strstr( renderer_buffer, "pcx2" ) )
-		gl_config.renderer = GL_RENDERER_PCX2;
-	else if ( strstr( renderer_buffer, "verite" ) )
-		gl_config.renderer = GL_RENDERER_RENDITION;
-	else
-		gl_config.renderer = GL_RENDERER_OTHER;
-*/
+
 	// Knightmare- replaced the vendor detection 
-	if (strstr(vendor_buffer, "nvidia")) {
+	/*if (strstr(vendor_buffer, "nvidia")) {
 		gl_config.renderer = GL_RENDERER_NVIDIA;
 		if (strstr(renderer_buffer, "geforce"))	gl_config.renderer |= GL_RENDERER_GEFORCE;
 	}
@@ -1404,25 +1353,25 @@ int R_Init ( void *hinstance, void *hWnd )
 		{
 			ri.Cvar_Set( "gl_monolightmap", "0" );
 		}
-	}
+	}*/
 
 	// power vr can't have anything stay in the framebuffer, so
 	// the screen needs to redraw the tiled background every frame
-	if ( gl_config.renderer & GL_RENDERER_POWERVR ) 
+	/*if ( gl_config.renderer & GL_RENDERER_POWERVR ) 
 	{
 		ri.Cvar_Set( "scr_drawall", "1" );
 	}
 	else
 	{
 		ri.Cvar_Set( "scr_drawall", "0" );
-	}
+	}*/
 
 #ifdef __linux__
 	ri.Cvar_SetValue( "gl_finish", 1 );
 #endif
 
 	// MCD has buffering issues
-	if ( gl_config.renderer == GL_RENDERER_MCD )
+	/*if ( gl_config.renderer == GL_RENDERER_MCD )
 	{
 		ri.Cvar_SetValue( "gl_finish", 1 );
 	}
@@ -1435,9 +1384,9 @@ int R_Init ( void *hinstance, void *hWnd )
 			gl_config.allow_cds = true;
 	}
 	else
-	{
+	{*/
 		gl_config.allow_cds = true;
-	}
+	//}
 
 	if ( gl_config.allow_cds )
 		ri.Con_Printf( PRINT_ALL, "...allowing CDS\n" );
@@ -1447,7 +1396,7 @@ int R_Init ( void *hinstance, void *hWnd )
 	// Knightmare- whether to use GL_RGBA textures & GL_BGRA lightmaps
 	// If using one of the mini-drivers, a Voodoo w/ WickedGL, or pre-1.2 driver,
 	// use the texture formats determined by gl_texturesolidmode and gl_texturealphamode.
-	if ( Q_stricmp(gl_driver->string, "opengl32") || gl_config.renderer == GL_RENDERER_VOODOO
+	/*if ( Q_stricmp(gl_driver->string, "opengl32") || gl_config.renderer == GL_RENDERER_VOODOO
 		|| (gl_config.version_major < 2 && gl_config.version_minor < 2) 
 		|| (!gl_newtextureformat || !gl_newtextureformat->value) )
 	{
@@ -1455,10 +1404,10 @@ int R_Init ( void *hinstance, void *hWnd )
 		gl_config.newTexFormat = false;
 	}
 	else
-	{
+	{*/
 		ri.Con_Printf( PRINT_ALL, "...using new texture format\n" );
 		gl_config.newTexFormat = true;
-	}
+	//}
 	// end Knightmare
 
 	/*
@@ -1509,7 +1458,7 @@ int R_Init ( void *hinstance, void *hWnd )
 		ri.Con_Printf( PRINT_ALL, "...GL_EXT_point_parameters not found\n" );
 	}*/
 
-#ifdef __linux__
+/*#ifdef __linux__
 	// 3DFX_set_global_palette
 	if ( StringContainsToken( gl_config.extensions_string, "3DFX_set_global_palette" ))
 	{
@@ -1528,7 +1477,7 @@ int R_Init ( void *hinstance, void *hWnd )
 	{
 		ri.Con_Printf( PRINT_ALL, "...3DFX_set_global_palette not found\n" );
 	}
-#endif
+#endif*/
 
 	// GL_EXT_paletted_texture / GL_EXT_shared_texture_palette
 	/*if ( !glColorTableEXT &&
@@ -1743,7 +1692,7 @@ void R_BeginFrame( float camera_separation )
 	{
 		vid_gamma->modified = false;
 
-		if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) )
+		/*if ( gl_config.renderer & ( GL_RENDERER_VOODOO ) )
 		{
 			char envbuffer[1024];
 			float g;
@@ -1753,7 +1702,7 @@ void R_BeginFrame( float camera_separation )
 			putenv( envbuffer );
 			Com_sprintf( envbuffer, sizeof(envbuffer), "SST_GAMMA=%f", g );
 			putenv( envbuffer );
-		}
+		}*/
 		UpdateGammaRamp (); // Knightmare- hardware gamma
 	}
 
