@@ -2,258 +2,268 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{b9767699-b175-4a1d-963f-96c289705db8}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+      <UniqueIdentifier>{3290bded-474b-4832-98ad-4ca3767f1afe}</UniqueIdentifier>
+      <Extensions>*.c</Extensions>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{bd57adaf-224b-4c67-b4e5-ca2d9cdff8ac}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;fi;fd</Extensions>
+      <UniqueIdentifier>{91c6db8a-cd57-46cf-a389-6b223a2d9451}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{42b482bf-cef4-4c21-a9dc-84e14af5d6a2}</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+      <UniqueIdentifier>{460f1fdb-952e-4fd6-a941-a9f0f82ced58}</UniqueIdentifier>
+      <Extensions>*.def,*.res</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="win32\cd_win.c">
+    <ClCompile Include="g_ai.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_cin.c">
+    <ClCompile Include="g_chase.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_download.c">
+    <ClCompile Include="g_cmds.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_ents.c">
+    <ClCompile Include="g_combat.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_fx.c">
+    <ClCompile Include="g_func.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_input.c">
+    <ClCompile Include="g_items.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_inv.c">
+    <ClCompile Include="g_main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_lights.c">
+    <ClCompile Include="g_misc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_main.c">
+    <ClCompile Include="g_monster.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_newfx.c">
+    <ClCompile Include="g_phys.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_parse.c">
+    <ClCompile Include="g_save.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_pred.c">
+    <ClCompile Include="g_spawn.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_scrn.c">
+    <ClCompile Include="g_svcmds.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_tent.c">
+    <ClCompile Include="g_target.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\cl_view.c">
+    <ClCompile Include="g_trigger.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\cmd.c">
+    <ClCompile Include="g_turret.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\cmodel.c">
+    <ClCompile Include="g_utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\common.c">
+    <ClCompile Include="g_weapon.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\conproc.c">
+    <ClCompile Include="m_actor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\console.c">
+    <ClCompile Include="m_berserk.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\crc.c">
+    <ClCompile Include="m_boss2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\cvar.c">
+    <ClCompile Include="m_boss3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\files.c">
+    <ClCompile Include="m_boss31.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\in_win.c">
+    <ClCompile Include="m_boss32.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\keys.c">
+    <ClCompile Include="m_boss5.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\m_flash.c">
+    <ClCompile Include="m_brain.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\md4.c">
+    <ClCompile Include="m_chick.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\menu.c">
+    <ClCompile Include="m_fixbot.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\net_chan.c">
+    <ClCompile Include="m_flash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\net_wins.c">
+    <ClCompile Include="m_flipper.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\pmove.c">
+    <ClCompile Include="m_float.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\q_shared.c">
+    <ClCompile Include="m_flyer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\q_shwin.c">
+    <ClCompile Include="m_gekk.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\qmenu.c">
+    <ClCompile Include="m_gladb.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\snd_dma.c">
+    <ClCompile Include="m_gladiator.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\snd_mem.c">
+    <ClCompile Include="m_gunner.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\snd_mix.c">
+    <ClCompile Include="m_hover.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\snd_stream.c">
+    <ClCompile Include="m_infantry.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\snd_win.c">
+    <ClCompile Include="m_insane.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_ccmds.c">
+    <ClCompile Include="m_medic.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_ents.c">
+    <ClCompile Include="m_move.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_game.c">
+    <ClCompile Include="m_mutant.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_init.c">
+    <ClCompile Include="m_parasite.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_main.c">
+    <ClCompile Include="m_soldier.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_send.c">
+    <ClCompile Include="m_supertank.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_user.c">
+    <ClCompile Include="m_tank.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="server\sv_world.c">
+    <ClCompile Include="p_client.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\sys_win.c">
+    <ClCompile Include="p_hud.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\vid_dll.c">
+    <ClCompile Include="p_trail.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\vid_menu.c">
+    <ClCompile Include="p_view.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qcommon\wildcard.c">
+    <ClCompile Include="p_weapon.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="client\x86.c">
+    <ClCompile Include="q_shared.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="client\anorms.h">
+    <ClInclude Include="g_local.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qcommon\bspfile.h">
+    <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\cdaudio.h">
+    <ClInclude Include="m_actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\client.h">
+    <ClInclude Include="m_berserk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win32\conproc.h">
+    <ClInclude Include="m_boss2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\console.h">
+    <ClInclude Include="m_boss31.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\game.h">
+    <ClInclude Include="m_boss32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\input.h">
+    <ClInclude Include="m_brain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\keys.h">
+    <ClInclude Include="m_chick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\q_shared.h">
+    <ClInclude Include="m_fixbot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qcommon\qcommon.h">
+    <ClInclude Include="m_flipper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qcommon\qfiles.h">
+    <ClInclude Include="m_float.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\qmenu.h">
+    <ClInclude Include="m_flyer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\ref.h">
+    <ClInclude Include="m_gekk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\screen.h">
+    <ClInclude Include="m_gladiator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="server\server.h">
+    <ClInclude Include="m_gunner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\snd_loc.h">
+    <ClInclude Include="m_hover.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\snd_ogg.h">
+    <ClInclude Include="m_infantry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\sound.h">
+    <ClInclude Include="m_insane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="client\vid.h">
+    <ClInclude Include="m_medic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qcommon\vid_modes.h">
+    <ClInclude Include="m_mutant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qcommon\vid_resolutions.h">
+    <ClInclude Include="m_parasite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qcommon\wildcard.h">
+    <ClInclude Include="m_player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win32\winquake.h">
+    <ClInclude Include="m_rider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m_soldier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m_soldierh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m_supertank.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m_tank.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="q_shared.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="win32\q2.ico">
+    <CustomBuild Include="xatrix.def">
       <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="win32\q2.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    </CustomBuild>
   </ItemGroup>
 </Project>

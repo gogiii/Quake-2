@@ -2,19 +2,25 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{7d8ee998-f52f-4ddb-b6ce-2b8c0aaf8c82}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90</Extensions>
+      <UniqueIdentifier>{42e4e885-3211-4ad0-8b3c-df5b8e250472}</UniqueIdentifier>
+      <Extensions>*.c</Extensions>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{3a264ce0-5d47-448c-bdc1-5e665588791f}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;fi;fd</Extensions>
+      <UniqueIdentifier>{80d3a35c-730b-41f2-8b47-b70d13a51036}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{562f0dad-8090-4e0a-a06c-aafea2bc1172}</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
+      <UniqueIdentifier>{df978331-34fa-4ab4-b393-8ce8104aac49}</UniqueIdentifier>
+      <Extensions>*.def,*.res</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dm_ball.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dm_tag.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="g_ai.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,6 +48,24 @@
     <ClCompile Include="g_monster.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="g_newai.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_newdm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_newfnc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_newtarg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_newtrig.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_newweap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="g_phys.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,6 +73,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="g_spawn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="g_sphere.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="g_svcmds.c">
@@ -88,6 +115,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="m_brain.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="m_carrier.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="m_chick.c">
@@ -135,10 +165,22 @@
     <ClCompile Include="m_soldier.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="m_stalker.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="m_supertank.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="m_tank.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="m_turret.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="m_widow.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="m_widow2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="p_client.c">
@@ -188,6 +230,9 @@
     <ClInclude Include="m_chick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="m_fixbot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="m_flipper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -195,6 +240,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="m_flyer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m_gekk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="m_gladiator.h">
@@ -224,7 +272,13 @@
     <ClInclude Include="m_player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="m_rider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="m_soldier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="m_soldierh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="m_supertank.h">
@@ -238,7 +292,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="game.def">
+    <CustomBuild Include="rogue.def">
       <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
