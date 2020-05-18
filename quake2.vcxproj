@@ -25,7 +25,7 @@
   <PropertyGroup Label="Globals">
     <SccProjectName />
     <SccLocalPath />
-    <ProjectGuid>{76C65F14-8957-4378-84B1-87C9E92EAE0B}</ProjectGuid>
+    <ProjectGuid>{5CE8497C-C6B0-43D0-82B2-E1D742B46D3F}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" Label="Configuration">
@@ -85,13 +85,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\debug\</OutDir>
     <IntDir>.\debug\</IntDir>
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
     <EmbedManifest>false</EmbedManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\release\</OutDir>
     <IntDir>.\release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
     <EmbedManifest>false</EmbedManifest>
   </PropertyGroup>
@@ -155,9 +156,13 @@
       <PrecompiledHeaderOutputFile>.\debug\quake2.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\debug\</ObjectFileName>
       <ProgramDataBaseFileName>.\debug\</ProgramDataBaseFileName>
+      <SDLCheck>false</SDLCheck>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
       <CompileAsManaged>false</CompileAsManaged>
-      <SDLCheck>false</SDLCheck>
+      <CompileAsWinRT>false</CompileAsWinRT>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Midl>
@@ -183,12 +188,9 @@
       <OutputFile>$(TargetPath)</OutputFile>
       <AdditionalLibraryDirectories>win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>winmm.lib;wsock32.lib;ogg_static.lib;vorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AllowIsolation>true</AllowIsolation>
-      <EnableUAC>false</EnableUAC>
       <DataExecutionPrevention>false</DataExecutionPrevention>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -210,12 +212,13 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>false</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
-      <UseUnicodeForAssemblerListing>false</UseUnicodeForAssemblerListing>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>NoExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -230,7 +233,7 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>.\Release\quake2.bsc</OutputFile>
+      <OutputFile>.\release\quake2.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -239,17 +242,8 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <AdditionalLibraryDirectories>win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>winmm.lib;wsock32.lib;ogg_static.lib;vorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <LinkStatus>
-      </LinkStatus>
-      <AllowIsolation>true</AllowIsolation>
-      <EnableUAC>false</EnableUAC>
-      <LargeAddressAware>true</LargeAddressAware>
-      <TerminalServerAware>false</TerminalServerAware>
-      <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>.\release\quake2.exe</OutputFile>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'">

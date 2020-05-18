@@ -229,7 +229,7 @@
       <LinkDLL>true</LinkDLL>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>..\debug\$(TargetFileName)</OutputFile>
+      <OutputFile>$(TargetPath)</OutputFile>
       <ImportLibrary>.\..\debug\ref_test.lib</ImportLibrary>
       <AdditionalDependencies>winmm.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\ref_test.def</ModuleDefinitionFile>
@@ -284,7 +284,7 @@
       <LinkDLL>true</LinkDLL>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>..\release\ref_gl.dll</OutputFile>
+      <OutputFile>$(TargetPath)</OutputFile>
       <ImportLibrary>.\..\release\ref_test.lib</ImportLibrary>
       <AdditionalDependencies>winmm.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\ref_test.def</ModuleDefinitionFile>

@@ -819,7 +819,7 @@ R_Clear
 */
 void R_Clear (void)
 {
-	GLbitfield	clearbits;	// Knightmare added
+	GLbitfield	clearbits = 0;
 
 	if (gl_ztrick->value)
 	{
