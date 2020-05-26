@@ -103,7 +103,7 @@ cvar_t	*gl_ext_swapinterval;
 cvar_t	*gl_ext_palettedtexture;
 cvar_t	*gl_ext_multitexture;
 //cvar_t	*gl_intel_allow_multitexture;
-cvar_t	*gl_ext_pointparameters;
+//cvar_t	*gl_ext_pointparameters;
 cvar_t	*gl_ext_compiled_vertex_array;
 cvar_t	*gl_arb_texturenonpoweroftwo;	// Knightmare- non-power-of-two texture support
 cvar_t	*gl_nonpoweroftwo_mipmaps;		// Knightmare- non-power-of-two texture support
@@ -121,7 +121,7 @@ cvar_t	*gl_shadows;
 cvar_t	*gl_shadowalpha; // Knightmare- added shadow alpha
 cvar_t	*gl_mode;
 cvar_t	*gl_dynamic;
-cvar_t  *gl_monolightmap;
+//cvar_t  *gl_monolightmap;
 cvar_t	*gl_modulate;
 cvar_t	*gl_nobind;
 cvar_t	*gl_round_down;
@@ -437,7 +437,7 @@ void R_DrawEntitiesOnList (void)
 ** GL_DrawParticles
 **
 */
-void GL_DrawParticles( int num_particles, const particle_t particles[], const unsigned colortable[768] )
+/*void GL_DrawParticles( int num_particles, const particle_t particles[], const unsigned colortable[768] )
 {
 	const particle_t *p;
 	int				i;
@@ -490,7 +490,7 @@ void GL_DrawParticles( int num_particles, const particle_t particles[], const un
 	glColor4f( 1,1,1,1 );
 	glDepthMask( 1 );		// back to normal Z buffering
 	GL_TexEnv( GL_REPLACE );
-}
+}*/
 
 /*
 ===============
@@ -499,8 +499,8 @@ R_DrawParticles
 */
 void R_DrawParticles (void)
 {
-	if ( gl_ext_pointparameters->value && glPointParameterf )
-	{
+//	if ( gl_ext_pointparameters->value && glPointParameterf )
+//	{
 		int i;
 		unsigned char color[4];
 		const particle_t *p;
@@ -528,11 +528,11 @@ void R_DrawParticles (void)
 		glDepthMask( GL_TRUE );
 		glEnable( GL_TEXTURE_2D );
 
-	}
+/*	}
 	else
 	{
 		GL_DrawParticles( r_newrefdef.num_particles, r_newrefdef.particles, d_8to24table );
-	}
+	}*/
 }
 
 /*
@@ -891,7 +891,7 @@ void R_RenderView (refdef_t *fd)
 
 	R_DrawEntitiesOnList ();
 
-	R_RenderDlights ();
+	R_RenderDlights (); // flashblend lights
 
 	R_DrawParticles ();
 
@@ -1069,7 +1069,7 @@ void R_Register ( void )
 	gl_polyblend = ri.Cvar_Get ("gl_polyblend", "1", 0);
 	gl_flashblend = ri.Cvar_Get ("gl_flashblend", "0", 0);
 	gl_playermip = ri.Cvar_Get ("gl_playermip", "0", 0);
-	gl_monolightmap = ri.Cvar_Get( "gl_monolightmap", "0", 0 );
+	//gl_monolightmap = ri.Cvar_Get( "gl_monolightmap", "0", 0 );
 	gl_driver = ri.Cvar_Get( "gl_driver", "opengl32", CVAR_ARCHIVE );
 
 	gl_anisotropic = ri.Cvar_Get( "gl_anisotropic", "0", CVAR_ARCHIVE );
@@ -1079,14 +1079,14 @@ void R_Register ( void )
 	gl_texturesolidmode = ri.Cvar_Get( "gl_texturesolidmode", "default", CVAR_ARCHIVE );
 	gl_lockpvs = ri.Cvar_Get( "gl_lockpvs", "0", 0 );
 
-	gl_vertex_arrays = ri.Cvar_Get( "gl_vertex_arrays", "0", CVAR_ARCHIVE );
+	gl_vertex_arrays = ri.Cvar_Get( "gl_vertex_arrays", "1", CVAR_ARCHIVE );
 
 	gl_ext_swapinterval = ri.Cvar_Get( "gl_ext_swapinterval", "1", CVAR_ARCHIVE );
 	gl_ext_palettedtexture = ri.Cvar_Get( "gl_ext_palettedtexture", "1", CVAR_ARCHIVE );
 	gl_ext_multitexture = ri.Cvar_Get( "gl_ext_multitexture", "1", CVAR_ARCHIVE );
 	// Knightmare- intel disable mulittexture option
 //	gl_intel_allow_multitexture = ri.Cvar_Get( "gl_intel_allow_multitexture", "0", CVAR_ARCHIVE );
-	gl_ext_pointparameters = ri.Cvar_Get( "gl_ext_pointparameters", "1", CVAR_ARCHIVE );
+	//gl_ext_pointparameters = ri.Cvar_Get( "gl_ext_pointparameters", "1", CVAR_ARCHIVE );
 	gl_ext_compiled_vertex_array = ri.Cvar_Get( "gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE );
 	// Knightmare- non-power-of-two texture support
 	gl_arb_texturenonpoweroftwo = ri.Cvar_Get( "gl_arb_texturenonpoweroftwo", "1", CVAR_ARCHIVE );

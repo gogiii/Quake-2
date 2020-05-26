@@ -452,7 +452,7 @@ void R_BlendLightmaps (void)
 		}
 		else
 		{
-			if ( gl_monolightmap->string[0] != '0' )
+			/*if ( gl_monolightmap->string[0] != '0' )
 			{
 				switch ( toupper( gl_monolightmap->string[0] ) )
 				{
@@ -469,9 +469,9 @@ void R_BlendLightmaps (void)
 				}
 			}
 			else
-			{
+			{*/
 				glBlendFunc (GL_ZERO, GL_SRC_COLOR );
-			}
+			//}
 		}
 	}
 
@@ -1929,7 +1929,7 @@ void GL_BeginBuildingLightmaps (model_t *m)
 	// Knightmare- old internal formats for compatibility with older GPUs/drivers
 	if ( !gl_config.newTexFormat )
 	{
-		if ( toupper( gl_monolightmap->string[0] ) == 'A' )
+		/*if ( toupper( gl_monolightmap->string[0] ) == 'A' )
 		{
 			gl_lms.internal_format = gl_tex_alpha_format;
 		}
@@ -1947,20 +1947,20 @@ void GL_BeginBuildingLightmaps (model_t *m)
 			gl_lms.internal_format = GL_LUMINANCE8;
 		}
 		else
-		{
+		{*/
 			gl_lms.internal_format = gl_tex_solid_format;
-		}
+		//}
 
 		gl_lms.external_format = GL_RGBA;
 		gl_lms.type = GL_UNSIGNED_BYTE;
 	}
 	else
 	{
-		if ( toupper( gl_monolightmap->string[0] ) == 'I' )
+		/*if ( toupper( gl_monolightmap->string[0] ) == 'I' )
 			gl_lms.internal_format = GL_INTENSITY8;
 		else if ( toupper( gl_monolightmap->string[0] ) == 'L' ) 
 			gl_lms.internal_format = GL_LUMINANCE8;
-		else
+		else*/
 			gl_lms.internal_format = GL_RGBA8;
 
 		gl_lms.external_format = GL_BGRA;
