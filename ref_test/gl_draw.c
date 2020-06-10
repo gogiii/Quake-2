@@ -151,7 +151,7 @@ void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 		Scrap_Upload ();
 
 	// Knightmare added- fix text/console corruption on drop errors
-	if (gl_config.multitexture && gl_state.multitextureEnabled)
+	//if (gl_config.multitexture && gl_state.multitextureEnabled)
 		GL_EnableMultitexture(false);
 	// end Knightmare
 

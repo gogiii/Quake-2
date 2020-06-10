@@ -611,7 +611,7 @@ void R_RenderWarpPoly (msurface_t *fa)
 R_RenderBrushPoly
 ================
 */
-void R_RenderBrushPoly (msurface_t *fa)
+/*void R_RenderBrushPoly (msurface_t *fa)
 {
 	int			maps;
 	image_t		*image;
@@ -645,9 +645,9 @@ void R_RenderBrushPoly (msurface_t *fa)
 
 	DrawGLPoly (fa);
 
-	/*
-	** check for lightmap modification
-	*/
+	//
+	// check for lightmap modification
+	//
 	for ( maps = 0; maps < MAXLIGHTMAPS && fa->styles[maps] != 255; maps++ )
 	{
 		if ( r_newrefdef.lightstyles[fa->styles[maps]].white != fa->cached_light[maps] )
@@ -704,7 +704,7 @@ dynamic:
 		fa->lightmapchain = gl_lms.lightmap_surfaces[fa->lightmaptexturenum];
 		gl_lms.lightmap_surfaces[fa->lightmaptexturenum] = fa;
 	}
-}
+}*/
 
 
 /*
@@ -793,7 +793,7 @@ void R_DrawTextureChains (void)
 
 	c_visible_textures = 0;
 
-	if (!gl_config.multitexture)
+	/*if (!gl_config.multitexture)
 	{
 		for ( i = 0, image=gltextures ; i<numgltextures ; i++,image++)
 		{
@@ -812,6 +812,7 @@ void R_DrawTextureChains (void)
 	}
 	else
 	{	// Knightmare- draw lightmapped surfs here
+	*/
 		GL_EnableMultitexture (true);
 
 		GL_SelectTexture( gl_texture0);
@@ -860,7 +861,7 @@ void R_DrawTextureChains (void)
 			}
 			image->texturechain = NULL;
 		}
-	}
+	//}
 
 	GL_TexEnv( GL_REPLACE );
 }
@@ -1151,7 +1152,7 @@ void R_DrawInlineBModel (void)
 
 // Knightmare- added for lightmap update batching
 #ifdef BATCH_LM_UPDATES
-			if ( gl_config.multitexture && ( r_fullbright->value == 0 ) 
+			if ( /*gl_config.multitexture && */( r_fullbright->value == 0 ) 
 				&& !(psurf->texinfo->flags & (SURF_SKY|SURF_TRANS33|SURF_TRANS66|SURF_WARP)) )
 				R_UpdateSurfaceLightmap (psurf);
 #endif
@@ -1212,8 +1213,8 @@ void R_DrawInlineBModel (void)
 
 	if ( !(currententity->flags & RF_TRANSLUCENT) )
 	{
-		if (!gl_config.multitexture)
-			R_BlendLightmaps ();
+		//if (!gl_config.multitexture)
+		//	R_BlendLightmaps ();
 	}
 	else
 	{
@@ -1407,7 +1408,7 @@ void R_RecursiveWorldNode (mnode_t *node)
 
 // Knightmare- added for lightmap update batching
 #ifdef BATCH_LM_UPDATES
-		if ( gl_config.multitexture && ( r_fullbright->value == 0 ) && 
+		if ( /*gl_config.multitexture &&*/ ( r_fullbright->value == 0 ) && 
 			!(surf->texinfo->flags & (SURF_SKY|SURF_TRANS33|SURF_TRANS66|SURF_WARP)) )
 			R_UpdateSurfaceLightmap (surf);
 #endif
@@ -1512,8 +1513,8 @@ void R_DrawWorld (void)
 	R_DrawSkyBox ();
 
 	// Knightmare- GuyP's gl_showtris fix
-	if (!gl_config.multitexture)
-		R_DrawTriangleOutlines (NULL, false, false);
+	//if (!gl_config.multitexture)
+	//	R_DrawTriangleOutlines (NULL, false, false);
 }
 
 

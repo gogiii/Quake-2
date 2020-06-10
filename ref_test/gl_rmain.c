@@ -1500,9 +1500,9 @@ int R_Init ( void *hinstance, void *hWnd )
 	}*/
 
 	// GL_ARB_multitexture
-	gl_config.multitexture = false;
-	if ( StringContainsToken( gl_config.extensions_string, "GL_ARB_multitexture" ) )
-	{
+	//gl_config.multitexture = false;
+	//if ( StringContainsToken( gl_config.extensions_string, "GL_ARB_multitexture" ) )
+	//{
 		/*if ( gl_config.renderer == GL_RENDERER_INTEL && !gl_intel_allow_multitexture->value )
 		{
 			ri.Con_Printf( PRINT_ALL, "...ignoring GL_ARB_multitexture due to Intel graphics\nSet gl_intel_allow_multitexture to 1 and vid_restart to enable.\n" );
@@ -1514,8 +1514,8 @@ int R_Init ( void *hinstance, void *hWnd )
 			//glClientActiveTextureARB = ( void * ) wglGetProcAddress( "glClientActiveTextureARB" );
 			gl_texture0 = GL_TEXTURE0_ARB;
 			gl_texture1 = GL_TEXTURE1_ARB;
-			gl_config.multitexture = true;
-			gl_state.multitextureEnabled = false;	// Knightmare added
+			//gl_config.multitexture = true;
+			//gl_state.multitextureEnabled = false;	// Knightmare added
 			ri.Con_Printf( PRINT_ALL, "...using GL_ARB_multitexture\n" );
 			glGetIntegerv(GL_MAX_TEXTURE_UNITS_ARB, &gl_config.max_texunits);
 			ri.Con_Printf (PRINT_ALL, "...GL_MAX_TEXTURE_UNITS_ARB: %i\n", gl_config.max_texunits);
@@ -1524,20 +1524,20 @@ int R_Init ( void *hinstance, void *hWnd )
 		{
 			ri.Con_Printf( PRINT_ALL, "...ignoring GL_ARB_multitexture\n" );
 		}
-	}
+	/*}
 	else
 	{
 		ri.Con_Printf( PRINT_ALL, "...GL_ARB_multitexture not found\n" );
-	}
+	}*/
 
 	// GL_SGIS_multitexture
-	if ( StringContainsToken( gl_config.extensions_string, "GL_SGIS_multitexture" ) )
+	/*if ( StringContainsToken( gl_config.extensions_string, "GL_SGIS_multitexture" ) )
 	{
 		if ( glActiveTexture )
 		{
 			ri.Con_Printf( PRINT_ALL, "...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n" );
 		}
-		/*else if ( gl_ext_multitexture->value )
+		else if ( gl_ext_multitexture->value )
 		{
 			glMultiTexCoord2f = ( void * ) wglGetProcAddress( "glMTexCoord2fSGIS" );
 			glSelectTextureSGIS = ( void * ) wglGetProcAddress( "glSelectTextureSGIS" );
@@ -1551,12 +1551,12 @@ int R_Init ( void *hinstance, void *hWnd )
 		else
 		{
 			ri.Con_Printf( PRINT_ALL, "...ignoring GL_SGIS_multitexture\n" );
-		}*/
+		}
 	}
 	else
 	{
 		ri.Con_Printf( PRINT_ALL, "...GL_SGIS_multitexture not found\n" );
-	}
+	}*/
 
 	// GL_ARB_texture_non_power_of_two
 	// Knightmare- non-power-of-two texture support

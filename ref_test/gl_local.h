@@ -510,7 +510,7 @@ typedef struct
 	qboolean	allow_cds;
 
 	// Knightmare added
-	qboolean	multitexture;				// multitexture is enabled
+	//qboolean	multitexture;				// multitexture is enabled
 	int			max_texsize;				// max texture size
 	int			max_texunits;				// texunits available
 
@@ -542,7 +542,7 @@ typedef struct
 	qboolean	stereo_enabled;
 
 	qboolean	gammaRamp;
-	qboolean	multitextureEnabled;	// Knightmare added
+	//qboolean	multitextureEnabled;	// Knightmare added
 
 	unsigned char originalRedGammaTable[256];
 	unsigned char originalGreenGammaTable[256];

@@ -5,6 +5,7 @@ This is a simple pet-project for testing and educational purposes.
  - Apply Knightmare's unofficial v24 patch;
  - Remove old hardware compatibility code (voodoo, legacy workarounds, etc);
  - Remove texture based dynamic lightmapping in order to use any modern techniques like multipass attenuation mapping or deferred lighting (in progress);
+ - Avoid changing game resources or adding any additional content;
 ### Future goals:
  - Implement any shadowing techniques like stencil shadow volumes or depth shadow mapping;
  - Remove static lightmapping support and use dynamic lighting only;

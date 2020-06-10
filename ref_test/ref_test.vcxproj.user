@@ -9,5 +9,6 @@
     <LocalDebuggerCommand>$(ProjectDir)\..\debug\quake2.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>d:\games\quake2</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommandArguments>+map base1 +notarget</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

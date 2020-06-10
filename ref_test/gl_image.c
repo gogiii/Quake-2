@@ -68,22 +68,22 @@ void GL_SetTexturePalette( unsigned palette[256] )
 
 void GL_EnableMultitexture( qboolean enable )
 {
-	if ( !gl_config.multitexture )
-		return;
+	//if ( !gl_config.multitexture )
+	//	return;
 
 	if ( enable )
 	{
 		GL_SelectTexture( GL_TEXTURE1 );
 		glEnable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
-		gl_state.multitextureEnabled = true;	// Knightmare added
+		//gl_state.multitextureEnabled = true;	// Knightmare added
 	}
 	else
 	{
 		GL_SelectTexture( GL_TEXTURE1 );
 		glDisable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
-		gl_state.multitextureEnabled = false;	// Knightmare added
+		//gl_state.multitextureEnabled = false;	// Knightmare added
 	}
 	GL_SelectTexture( gl_texture0 );
 	GL_TexEnv( GL_REPLACE );
@@ -93,8 +93,8 @@ void GL_SelectTexture( GLenum texture )
 {
 	int tmu;
 
-	if ( !gl_config.multitexture )
-		return;
+	//if ( !gl_config.multitexture )
+	//	return;
 
 	if ( texture == gl_texture0 )
 	{

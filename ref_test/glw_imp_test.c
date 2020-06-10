@@ -398,11 +398,11 @@ void GLimp_Shutdown( void )
 		glw_state.hWnd = NULL;
 	}
 
-	if ( glw_state.log_fp )
+	/*if ( glw_state.log_fp )
 	{
 		fclose( glw_state.log_fp );
 		glw_state.log_fp = 0;
-	}
+	}*/
 
 	UnregisterClass (WINDOW_CLASS_NAME, glw_state.hInstance);
 
@@ -507,14 +507,6 @@ qboolean GLimp_InitGL (void)
 	{
 		gl_state.stereo_enabled = false;
 	}
-
-	/*
-	** figure out if we're running on a minidriver or not
-	*/
-	if ( strstr( gl_driver->string, "opengl32" ) != 0 )
-		glw_state.minidriver = false;
-	else
-		glw_state.minidriver = true;
 
 	/*
 	** Get a DC for the specified window
@@ -636,15 +628,15 @@ qboolean GLimp_InitGL (void)
 	// end Knightmare
 
 	// init extensions
-	wglSwapIntervalEXT = wglGetProcAddress("wglSwapIntervalEXT");
-	glLockArraysEXT = wglGetProcAddress("glLockArraysEXT");
-	glUnlockArraysEXT = wglGetProcAddress("glUnlockArraysEXT");
-	glPointParameterf = wglGetProcAddress("glPointParameterf");
-	glPointParameterfv = wglGetProcAddress("glPointParameterfv");
-	glActiveTexture = wglGetProcAddress("glActiveTexture");
-	glClientActiveTexture = wglGetProcAddress("glClientActiveTexture");
-	glMultiTexCoord2f = wglGetProcAddress("glMultiTexCoord2f");
-	glColorTable = wglGetProcAddress("glColorTable");
+	wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC) wglGetProcAddress("wglSwapIntervalEXT");
+	glLockArraysEXT = (PFNGLLOCKARRAYSEXTPROC) wglGetProcAddress("glLockArraysEXT");
+	glUnlockArraysEXT = (PFNGLUNLOCKARRAYSEXTPROC) wglGetProcAddress("glUnlockArraysEXT");
+	glPointParameterf = (PFNGLPOINTPARAMETERFPROC) wglGetProcAddress("glPointParameterf");
+	glPointParameterfv = (PFNGLPOINTPARAMETERFVPROC) wglGetProcAddress("glPointParameterfv");
+	glActiveTexture = (PFNGLACTIVETEXTUREPROC) wglGetProcAddress("glActiveTexture");
+	glClientActiveTexture = (PFNGLCLIENTACTIVETEXTUREPROC) wglGetProcAddress("glClientActiveTexture");
+	glMultiTexCoord2f = (PFNGLMULTITEXCOORD2FPROC) wglGetProcAddress("glMultiTexCoord2f");
+	glColorTable = (PFNGLCOLORTABLEPROC) wglGetProcAddress("glColorTable");
 
 	return true;
 
